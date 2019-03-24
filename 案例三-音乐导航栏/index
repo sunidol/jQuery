@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>音乐导航栏</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .nav{
+            width: 900px;
+            height: 60px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .nav ul{
+            list-style-type: none;
+            height: 60px;
+        }
+        .nav li{
+            float: left;
+            width: 100px;
+            height: 60px;
+            background-color: #000;
+            position: relative;
+        }
+        .nav li a{
+            text-decoration: none;
+            display: block;
+            width: 100px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 60px;
+            position: relative;
+            /*此处的层级是为了下面的span不能把a中内容遮住*/
+            z-index: 1;
+        }
+        .nav li span{
+            position: absolute;
+            top:60px;
+            left: 0;
+            width: 100px;
+            height: 60px;
+            background-color: yellow;
+            
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+    <ul>
+        <li><a href="#">导航1</a><span></span></li>
+        <li><a href="#">导航2</a><span></span></li>
+        <li><a href="#">导航3</a><span></span></li>
+        <li><a href="#">导航4</a><span></span></li>
+        <li><a href="#">导航5</a><span></span></li>
+        <li><a href="#">导航6</a><span></span></li>
+        <li><a href="#">导航7</a><span></span></li>
+        <li><a href="#">导航8</a><span></span></li>
+        <li><a href="#">导航9</a><span></span></li>
+    </ul>
+    <div>
+        <audio src="mp3/1.ogg"></audio>
+        <audio src="mp3/2.ogg"></audio>
+        <audio src="mp3/3.ogg"></audio>
+        <audio src="mp3/4.ogg"></audio>
+        <audio src="mp3/5.ogg"></audio>
+        <audio src="mp3/6.ogg"></audio>
+        <audio src="mp3/7.ogg"></audio>
+        <audio src="mp3/8.ogg"></audio>
+        <audio src="mp3/9.ogg"></audio>
+    </div>
+</div>
+<script src="../jquery-1.12.4.js"></script>
+<script>
+    $(function () {
+       var $li=$(".nav li");
+        $li.mouseenter(function () {
+            //鼠标进入后，通过动画span的top定位为0，
+           $(this).children("span").stop().animate({top:0});
+            //播放对应的音阶
+            var idx=$(this).index();
+            //由于jq对象不能调用play方法，故用get接收idx将对象转为DOM对象
+            $("audio").get(idx).load();
+            $("audio").get(idx).play();
+        }).mouseleave(function () {
+            $(this).children("span").stop().animate({top:60});
+        });
+    });
+</script>
+</body>
+</html>
