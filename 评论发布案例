@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微博发布</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+
+        }
+        .box{
+            width: 700px;
+            /*height: 200px;*/
+            margin:100px auto;
+            border:1px solid #000;
+            padding: 20px;
+        }
+        .box textarea{
+            width: 580px;
+            height: 200px;
+            outline: none;
+        }
+        ul{
+            list-style-type: none;
+            width: 580px;
+            padding-left: 80px;
+        }
+        ul li {
+            line-height: 30px;
+            border-bottom: 1px dashed #cccccc;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <span>微博发布</span>
+    <textarea name="" id="txt" cols="30" rows="10"></textarea>
+    <button>发布</button>
+    <ul id="list">
+
+    </ul>
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+           $("button").click(function () {
+               if($("#txt").val()==""){
+                    return;
+               }//如果textarea中没有输入字符，点击了按钮，则直接跳出事件
+//               if($("#txt").val().trim().length == 0) {
+//                   return;
+//               }   trim()??
+               var text=$("#txt").val();//获取textarea里面的内容,val()方法返回的是字符串，不是jq对象，后面就不能链式编程了
+               $("<li></li>").text(text).appendTo($("#list"));
+               $("#txt").val("");
+           });
+        });
+    </script>
+</div>
+</body>
+</html>
