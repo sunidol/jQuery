@@ -43,9 +43,9 @@
         //当页面超出1000px时，小火箭出现
         $(window).scroll(function () {
             if($(window).scrollTop()>=1000){
-                $(".toTop").fadeIn(1000);
+                $(".toTop").stop().fadeIn(1000);
             }else{
-                    $(".toTop").fadeOut(200);
+                    $(".toTop").stop().fadeOut(200);
             }
         });
 
@@ -63,7 +63,10 @@
 
         //为小火箭注册点击事件，点击后回到顶部
         $(".toTop").click(function () {
-            $("html,body").animate({scrollTop:0},3000);
+//            以动画的方式回到顶部
+            //$("html,body").stop().animate({scrollTop:0},2000);
+//            直接设置scrollTop的值为0，迅速返回到顶部
+            $(window).scrollTop(0);
         });
     });
 </script>
