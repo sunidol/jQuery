@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹幕</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .box-bottom{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .id-bottom{
+            height: 100px;
+            width: 100%;
+            margin: auto;
+            background-color: #666;
+            position: fixed;
+            bottom: 0;
+        }
+        .content{
+            height: 32px;
+            width: 424px;
+            margin: 34px auto ;
+            position: relative;
+        }
+        p,input,button{
+            display: block;
+            float: left;
+        }
+        p{
+            font-size: 24px;
+            color: #fff;
+           /*保证字与表单对齐*/
+            vertical-align: bottom;
+        }
+        input{
+            width: 300px;
+            height: 30px;
+            border-radius: 5px;
+            border: 0;
+            outline: none;
+            padding-left: 5px;
+        }
+        button{
+            width: 60px;
+            height: 30px;
+            background-color: red;
+            color: #ffffff;
+            font-size: 14px;
+           border: none;
+            margin-left: 2px;
+            outline: none;
+        }
+        span{
+            position: absolute;
+            width: 300px;
+            height: 40px;
+            overflow: hidden;
+            color: #000;
+            font-size: 24px;
+            line-height: 1.5em;
+            cursor: pointer;
+            white-space: nowrap;/*文本不会换行，会在同一行上继续，直到遇到<br >标签*/
+        }
+    </style>
+</head>
+<body>
+<!--弹幕出现的区域，与整个页面大小一样-->
+<div class="box-bottom">
+    <!--底下的盒子-->
+    <div class="id-bottom">
+        <!--内容盒子-->
+        <div class="content">
+            <p>吐槽:</p>
+            <input type="text" id="txt">
+            <button value="">发射</button>
+        </div>
+    </div>
+</div>
+<script src="jquery-1.12.4.js"></script>
+<script>
+   $(function () {
+       $("button").click(function () {
+            var colors=["red","yellow","pink","hotpink","yellowgreen","black","purple"];//定义颜色数组
+            var co_idx=parseInt(Math.random()*colors.length);//随机产生颜色数组的索引值
+            var randomY=parseInt(Math.random()*400);//随机产生top值，使得弹幕每次出现的高度不一样
+            var txt=$("#txt").val();//获取input中的内容
+            //链式编程的方式：
+           $("<span></span>")//创建span元素，并给予样式，但是一些基本样式可以在css中先写好
+                   .text(txt)//设置内容
+                   .css("color",colors[co_idx])//设置颜色
+                   .css("left",1000)//设置left值，只要能让它刚开始看不到就行，在页面外面
+                   .css("top",randomY)//设置top值
+                   .animate({left:-500},6000,"linear",function () {
+                       //添加回调的作用：到了终点，span需要删除
+                       $(this).remove();
+                   })//添加动画
+                   .appendTo($(".box-bottom"));
+
+
+           $("#txt").val("");//点击按钮后清空input中的值
+
+           //按下回车时，也能出现弹幕
+           //给input添加键盘抬起事件
+           $("#txt").keyup(function (e) {
+               if(e.keyCode==13){
+                   $("button").click();
+               }
+           });
+
+       });
+   });
+</script>
+</body>
+</html>
