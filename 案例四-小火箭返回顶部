@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>返回顶部</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            height: 6000px;
+        }
+        .toTop{
+            width: 150px;
+            height: 195px;
+            position: fixed;
+            bottom: 50px;
+            right:50px;
+            display: none;
+            z-index:999;
+        }
+        .toTop a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: url("images/gotop.png") no-repeat;
+            cursor: pointer;
+        }
+        .toTop a:hover{
+            background-image: url("images/gotop.gif");
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div class="toTop">
+    <a href="javascript:void(0);"></a>
+</div>
+<script src="../jquery-1.12.4.js"></script>
+<script>
+    $(function () {
+        //当页面超出1000px时，小火箭出现
+        $(window).scroll(function () {
+            if($(window).scrollTop()>=1000){
+                $(".toTop").stop().fadeIn(1000);
+            }else{
+                    $(".toTop").stop().fadeOut(200);
+            }
+        });
+
+        //scroll封装函数（获取页面向上、向左卷曲的值）
+        function getScroll() {
+            return {
+//                第一种是window获取方式，window对象没有scrollLeft这个属性，而且pageXOffset是一个只读属性，只能获取，不能赋值；
+//                第二种是html对象获取方式，获取scroll的方式是用scroll这个属性，但是有兼容性：IE8以下可用
+//                第二种是body对象获取方式，获取scroll的方式是用scroll这个属性，但是有兼容性：谷歌可用，IE8以下不可用
+                left:window.pageXOffset||document.documentElement.scrollLeft||document.body.scrollLeft||0,
+                top:window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0
+            }
+        }
+
+
+        //为小火箭注册点击事件，点击后回到顶部
+        $(".toTop").click(function () {
+//            以动画的方式回到顶部
+            //$("html,body").stop().animate({scrollTop:0},2000);
+//            直接设置scrollTop的值为0，迅速返回到顶部
+            $(window).scrollTop(0);
+        });
+    });
+</script>
+</body>
+</html>

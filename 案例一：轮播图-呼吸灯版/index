@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        .slider{
+            width: 790px;
+            height: 340px;
+            margin:100px auto;
+            position: relative;
+        }
+        .slider ul{
+            list-style-type: none;
+            width: 790px;
+            height: 340px;
+            position: relative;
+        }
+        .slider ul li{
+            position: absolute;
+            top:0;
+            left: 0;
+            display: none;
+        }
+        .slider ul li:first-child{
+            display:block;
+        }
+        .arrow{
+            display: none;
+        }
+        /*平时箭头不显示，当鼠标进入轮播图时，arrow显示*/
+        .slider:hover .arrow{
+            display: block;
+        }
+        .arrow span{
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: rgba(0,0,0,.2);
+            top:50%;
+            margin-top: -30px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 60px;
+            font-size:25px;
+            font-weight:700;
+        }
+        .arrow .arr-right{
+            right:0;
+        }
+        .arrow .arr-left{
+            left:0;
+        }
+        .arrow span:hover{
+            cursor: pointer;
+            background: rgba(0,0,0,.5);
+        }
+        .slider ol{
+            list-style-type: none;
+            width: 180px;
+            height: 20px;
+            background: rgba(255,255,255,.4);
+            position: absolute;
+            left:50%;
+            margin-left:-90px;
+            bottom: 20px;
+            border-radius: 10px;
+        }
+        .slider ol li{
+            float: left;
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            margin: 4px 5px;
+            cursor: pointer;
+        }
+        .slider .current{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="slider">
+    <ul>
+        <li><a href="#"><img src="images/1.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/2.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/3.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/6.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/7.jpg" alt=""></a></li>
+        <li><a href="#"><img src="images/8.jpg" alt=""></a></li>
+    </ul>
+    <div class="arrow">
+        <span class="arr-left">&lt;</span>
+        <span class="arr-right">&gt;</span>
+    </div>
+    <ol>
+        <li class="current"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+</div>
+<script src="../jquery-1.12.4.js"></script>
+<script>
+    $(function () {
+       var count=0;//count必须作为全局变量
+//        为右箭头注册点击事件
+        $(".arr-right").click(function () {
+            count++;
+            if(count==$(".slider ul li").length){
+                count=0;
+            }
+            $(".slider ul li").eq(count).fadeIn(500).siblings().fadeOut(500);
+            $(".slider ol li").eq(count).addClass("current").siblings().removeClass("current");
+       });
+
+//        为左箭头注册点击事件
+        $(".arr-left").click(function () {
+            count--;
+            if(count==-1){
+                count=$(".slider ul li").length-1;
+            }
+            $(".slider ul li").eq(count).fadeIn(500).siblings().fadeOut(500);
+            $(".slider ol li").eq(count).addClass("current").siblings().removeClass("current");
+        });
+
+ //        为小圆点注册鼠标进入事件
+        $(".slider ol li").mouseenter(function () {
+            count=$(this).index();
+//            console.log(count);
+            $(this).addClass("current").siblings().removeClass("current");
+            $(".slider ul li").eq(count).fadeIn(500).siblings().fadeOut(500);
+        });
+    });
+</script>
+</body>
+</html>
