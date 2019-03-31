@@ -88,6 +88,35 @@
         }).mouseleave(function () {
             $(this).children("span").stop().animate({top:60});
         });
+
+        //模拟钢琴的功能，按下1-9这几个数字键(键盘按下事件)，触发相应得mouseover事件
+        //这两段代码有bug，只要键盘一直按着就会一直触发事件，此时
+        // 需要添加节流阀：按下键盘触发，如果没弹起，不让触发下一次
+        //定义一个变量flag，令它为true。在事件中判断flag，为true才执行函数，并且立即把true改为flase;
+        // 在下一个事件触发时，把它改回为true
+        var flag=true;
+        $(document).on("keydown",function (e) {
+            if(flag){
+                flag=false;
+                //用jq事件对象获取按下的键的值
+                var keyIdx=e.keyCode;
+                if( keyIdx >=49 && keyIdx<=57){
+                    //如果获取到键是1-9数字键，则触发相应的事件，不同的音符响起
+                    $li.eq(keyIdx-49).trigger("mouseenter");
+                }
+            }
+
+        });
+//        键盘抬起事件：触发mouseleave事件
+        $(document).on("keyup",function (e) {
+                flag=true;
+                var keyIdx=e.keyCode;
+                if( keyIdx >=49 && keyIdx<=57) {
+                    $li.eq(keyIdx - 49).trigger("mouseleave");
+                }
+
+        });
+
     });
 </script>
 </body>
