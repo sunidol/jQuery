@@ -36,6 +36,8 @@
         $(".comment>li").on("mouseenter",function () {
             $(this).text(star_s).prevAll().text(star_s);//当前的li的内容为star-s，它之前的所有li的内容都为star-s
             $(this).nextAll().text(star_k);//当前li后面的li的内容都为star-k
+//            上面两句话不能直接链式编程，因为jq对象中的DOM对象是变化的，如果实在想链式编程，可以用end()方法
+            $(this).text(star_s).prevAll().text(star_s).end().nextAll().text(star_k);
         });
 
 //        2、给ul注册鼠标离开事件
